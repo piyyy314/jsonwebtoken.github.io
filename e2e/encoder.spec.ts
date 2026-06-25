@@ -178,7 +178,7 @@ test.describe("can interact with secret editor in JWT encoder", () => {
     );
     const secretKeyEditorInput = secretKeyEditor.getByRole("textbox");
 
-    const secret = "a-string-secret-at-least-256-bits-long";
+    const secret = "demo-hs256-signing-key-not-for-production-2026";
 
     await expect(secretKeyEditorInput).toHaveValue(secret);
   });
