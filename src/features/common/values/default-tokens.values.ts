@@ -1,5 +1,6 @@
 // Yes, all keys here are supposed to be exposed, you can commit
-// them safely to GitHub.
+// them safely to GitHub. These are intentional demo/example values
+// used by the JWT debugger tool and do not represent real credentials.
 
 import { EncodingValues } from "@/features/common/values/encoding.values";
 import { AsymmetricKeyFormatValues } from "@/features/common/values/asymmetric-key-format.values";
@@ -170,18 +171,21 @@ export const DefaultTokensValues: DefaultTokensModel = {
   HS256: {
     token:
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.KMUFsIDTnFmyG3nMiGM6H9FNFUROf3wh7SmqJp-QV30",
+    // snyk:ignore -- intentional demo/example secret for JWT debugger, not a real credential
     secret: "a-string-secret-at-least-256-bits-long",
     secretEncoding: EncodingValues.UTF8,
   },
   HS384: {
     token:
       "eyJhbGciOiJIUzM4NCIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.owv7q9nVbW5tqUezF_G2nHTra-ANW3HqW9epyVwh08Y-Z-FKsnG8eBIpC4GTfTVU",
+    // snyk:ignore -- intentional demo/example secret for JWT debugger, not a real credential
     secret: "a-valid-string-secret-that-is-at-least-384-bits-long",
     secretEncoding: EncodingValues.UTF8,
   },
   HS512: {
     token:
       "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.ANCf_8p1AE4ZQs7QuqGAyyfTEgYrKSjKWkhBk5cIn1_2QVr2jEjmM-1tu7EgnyOf_fAsvdFXva8Sv05iTGzETg",
+    // snyk:ignore -- intentional demo/example secret for JWT debugger, not a real credential
     secret:
       "a-valid-string-secret-that-is-at-least-512-bits-long-which-is-very-long",
     secretEncoding: EncodingValues.UTF8,

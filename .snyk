@@ -1,0 +1,17 @@
+# Snyk (https://snyk.io) policy file
+#
+# This file configures Snyk Code analysis exclusions for files that contain
+# intentional demo/example data used by the JWT debugger tool.
+#
+# The excluded files contain:
+#   - Example HMAC secrets for HS256/HS384/HS512 algorithm demonstrations
+#   - Randomly-generated test key pairs used in end-to-end tests
+#
+# These are NOT real production credentials. They are demo values that allow
+# users of the JWT debugger to see working examples of JWT signing and verification.
+#
+# See also: src/features/common/values/default-tokens.values.ts (inline snyk:ignore comments)
+version: v1.25.0
+exclude:
+  code:
+    - e2e/jwt.json
