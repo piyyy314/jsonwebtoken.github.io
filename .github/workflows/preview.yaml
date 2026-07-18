@@ -21,8 +21,10 @@ jobs:
         run: npm install --global vercel@latest
       - name: Deploy on Vercel
         id: deploy
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_ACCESS_TOKEN }}
         run: |
-          vercel deploy --token=${{ secrets.VERCEL_ACCESS_TOKEN }} > deploy.log
+          vercel deploy > deploy.log
           URL=$(cat deploy.log | grep -o 'https://[^ ]*.vercel.app' | head -n1)
           echo "deploymentUrl=$URL" >> $GITHUB_OUTPUT
       - name: Extract branch name
@@ -31,8 +33,10 @@ jobs:
         id: extract_branch
       - name: Assign Custom Domain
         if: ${{ steps.extract_branch.outputs.branch == 'remove-basepath-2' }}
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_ACCESS_TOKEN }}
         run: |
-          vercel alias set --token=${{ secrets.VERCEL_ACCESS_TOKEN }} ${{ steps.deploy.outputs.deploymentUrl }} ab-test-next-jwt-io.vercel.app --scope=okta
+          vercel alias set ${{ steps.deploy.outputs.deploymentUrl }} ab-test-next-jwt-io.vercel.app --scope=okta
 
   Add-Comment:
     runs-on:
