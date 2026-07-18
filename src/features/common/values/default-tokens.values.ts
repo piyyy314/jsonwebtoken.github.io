@@ -180,10 +180,8 @@ export const DefaultTokensValues: DefaultTokensModel = {
   },
   HS256: {
     token:
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.KMUFsIDTnFmyG3nMiGM6H9FNFUROf3wh7SmqJp-QV30",
-    // snyk:ignore -- intentional demo/example secret for JWT debugger, not a real credential
-    secret: "a-string-secret-at-least-256-bits-long",
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.hCBjdqhEJVhOLn6_D3-XzZ8cc-kVb5eTjH6A_s823NQ",
+    // snyk:ignore -- intentional demo/example secret for JWT debugger, not a real credential
     secret: defaultHs256Secret,
     secretEncoding: EncodingValues.UTF8,
   },
