@@ -5,6 +5,16 @@
 import { EncodingValues } from "@/features/common/values/encoding.values";
 import { AsymmetricKeyFormatValues } from "@/features/common/values/asymmetric-key-format.values";
 
+const defaultHs256Secret =
+  process.env.NEXT_PUBLIC_DEFAULT_HS256_SECRET ??
+  "demo-hs256-signing-key-not-for-production-2026";
+const defaultHs384Secret =
+  process.env.NEXT_PUBLIC_DEFAULT_HS384_SECRET ??
+  "demo-hs384-signing-key-not-for-production-2026-with-extra-length";
+const defaultHs512Secret =
+  process.env.NEXT_PUBLIC_DEFAULT_HS512_SECRET ??
+  "demo-hs512-signing-key-not-for-production-2026-with-even-more-extra-length-for-size";
+
 const rsaPrivateKey = `-----BEGIN PRIVATE KEY-----
 MIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQC7VJTUt9Us8cKj
 MzEfYyjiWA4R4/M2bS1GB4t7NXp98C3SC6dVMvDuictGeurT8jNbvJZHtCSuYEvu
@@ -173,6 +183,8 @@ export const DefaultTokensValues: DefaultTokensModel = {
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.KMUFsIDTnFmyG3nMiGM6H9FNFUROf3wh7SmqJp-QV30",
     // snyk:ignore -- intentional demo/example secret for JWT debugger, not a real credential
     secret: "a-string-secret-at-least-256-bits-long",
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.hCBjdqhEJVhOLn6_D3-XzZ8cc-kVb5eTjH6A_s823NQ",
+    secret: defaultHs256Secret,
     secretEncoding: EncodingValues.UTF8,
   },
   HS384: {
@@ -180,6 +192,8 @@ export const DefaultTokensValues: DefaultTokensModel = {
       "eyJhbGciOiJIUzM4NCIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.owv7q9nVbW5tqUezF_G2nHTra-ANW3HqW9epyVwh08Y-Z-FKsnG8eBIpC4GTfTVU",
     // snyk:ignore -- intentional demo/example secret for JWT debugger, not a real credential
     secret: "a-valid-string-secret-that-is-at-least-384-bits-long",
+      "eyJhbGciOiJIUzM4NCIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.n7TWN_xUR5qBbtMnxBwsUyNna4WuEbJE-IjuSCHm1HnCjIA0RHOsjduuULvdT_I8",
+    secret: defaultHs384Secret,
     secretEncoding: EncodingValues.UTF8,
   },
   HS512: {
@@ -188,6 +202,8 @@ export const DefaultTokensValues: DefaultTokensModel = {
     // snyk:ignore -- intentional demo/example secret for JWT debugger, not a real credential
     secret:
       "a-valid-string-secret-that-is-at-least-512-bits-long-which-is-very-long",
+      "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.r848b6CTRIITH642pCv4ORNh2YnYUt4j-X-6SzKeUxvvdzbh6YCswQshEyENiMgJspGoUQ65jLGGcgrysh81Mg",
+    secret: defaultHs512Secret,
     secretEncoding: EncodingValues.UTF8,
   },
   RS256: {
