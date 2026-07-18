@@ -196,9 +196,6 @@ export const DefaultTokensValues: DefaultTokensModel = {
     token:
       "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.ANCf_8p1AE4ZQs7QuqGAyyfTEgYrKSjKWkhBk5cIn1_2QVr2jEjmM-1tu7EgnyOf_fAsvdFXva8Sv05iTGzETg",
     // snyk:ignore -- intentional demo/example secret for JWT debugger, not a real credential
-    secret:
-      "a-valid-string-secret-that-is-at-least-512-bits-long-which-is-very-long",
-      "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.r848b6CTRIITH642pCv4ORNh2YnYUt4j-X-6SzKeUxvvdzbh6YCswQshEyENiMgJspGoUQ65jLGGcgrysh81Mg",
     secret: defaultHs512Secret,
     secretEncoding: EncodingValues.UTF8,
   },
