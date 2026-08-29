@@ -12,6 +12,8 @@ jobs:
     runs-on:
       labels: ubuntu-latest
     environment: preview
+    permissions:
+      contents: read
     outputs:
       deploymentUrl: ${{ steps.deploy.outputs.deploymentUrl }}
     steps:
@@ -21,18 +23,35 @@ jobs:
         run: npm install --global vercel@latest
       - name: Deploy on Vercel
         id: deploy
+        env:
+          VERCEL_ACCESS_TOKEN: ${{ secrets.VERCEL_ACCESS_TOKEN }}
         run: |
-          vercel deploy --token=${{ secrets.VERCEL_ACCESS_TOKEN }} > deploy.log
-          URL=$(cat deploy.log | grep -o 'https://[^ ]*.vercel.app' | head -n1)
-          echo "deploymentUrl=$URL" >> $GITHUB_OUTPUT
+          set -euo pipefail
+
+          if [ -z "${VERCEL_ACCESS_TOKEN:-}" ]; then
+            echo "::error title=Missing Vercel token::The preview environment must define the VERCEL_ACCESS_TOKEN secret."
+            exit 1
+          fi
+
+          vercel deploy --token "$VERCEL_ACCESS_TOKEN" 2>&1 | tee deploy.log
+          URL="$(grep -Eo 'https://[^ ]*\.vercel\.app' deploy.log | head -n1)"
+
+          if [ -z "$URL" ]; then
+            echo "::error title=Missing deployment URL::Vercel deploy did not output a preview deployment URL."
+            exit 1
+          fi
+
+          echo "deploymentUrl=$URL" >> "$GITHUB_OUTPUT"
       - name: Extract branch name
         shell: bash
         run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
         id: extract_branch
       - name: Assign Custom Domain
         if: ${{ steps.extract_branch.outputs.branch == 'remove-basepath-2' }}
+        env:
+          VERCEL_ACCESS_TOKEN: ${{ secrets.VERCEL_ACCESS_TOKEN }}
         run: |
-          vercel alias set --token=${{ secrets.VERCEL_ACCESS_TOKEN }} ${{ steps.deploy.outputs.deploymentUrl }} ab-test-next-jwt-io.vercel.app --scope=okta
+          vercel alias set --token "$VERCEL_ACCESS_TOKEN" "${{ steps.deploy.outputs.deploymentUrl }}" ab-test-next-jwt-io.vercel.app --scope=okta
 
   Add-Comment:
     runs-on:
@@ -58,7 +77,12 @@ jobs:
             })
 
             // Set issue number for following calls from context (if on pull request event) or from above variable.
-            const issueNumber = context.issue.number || pullRequests.data[0].number
+            const issueNumber = context.issue.number || pullRequests.data[0]?.number
+
+            if (!issueNumber) {
+                core.info(`No open pull request found for ${context.ref}; skipping preview comment.`)
+                return
+            }
 
             // Retrieve existing bot comments for the PR
             const {data: comments} = await github.rest.issues.listComments({
@@ -67,21 +91,21 @@ jobs:
                 issue_number: issueNumber,
             })
             const botComment = comments.find(comment => {
-                return comment.user.type === 'Bot' && comment.body.includes('Preview URL at')
+                return comment.user.type === 'Bot' && comment.body.startsWith('Preview URL ')
             })
 
             const output = "Preview URL " + process.env.DEPLOYMENT_URL
 
             // If we have a comment, update it, otherwise create a new one
             if (botComment) {
-                github.rest.issues.updateComment({
+                await github.rest.issues.updateComment({
                     owner: context.repo.owner,
                     repo: context.repo.repo,
                     comment_id: botComment.id,
                     body: output
                 })
             } else {
-                github.rest.issues.createComment({
+                await github.rest.issues.createComment({
                     issue_number: issueNumber,
                     owner: context.repo.owner,
                     repo: context.repo.repo,
