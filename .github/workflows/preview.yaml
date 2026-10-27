@@ -34,7 +34,7 @@ jobs:
           fi
 
           vercel deploy --token "$VERCEL_ACCESS_TOKEN" 2>&1 | tee deploy.log
-          URL="$(grep -Eo 'https://[^ ]*\.vercel\.app' deploy.log | head -n1)"
+URL="$(grep -m1 -Eo 'https://[^ ]*\.vercel\.app' deploy.log || true)"
 
           if [ -z "$URL" ]; then
             echo "::error title=Missing deployment URL::Vercel deploy did not output a preview deployment URL."
